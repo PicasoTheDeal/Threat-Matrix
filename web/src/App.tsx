@@ -599,10 +599,6 @@ export default function App() {
     });
   };
 
-  const autofillDefaultPassword = () => {
-    setPassword("ThreatMatrix_Core_Protocol_Activated_2026_SecureEdge_Vault_Alpha_ZeroTrust_Authentication_Key_With_Capitals_Numbers_And_Symbols_$");
-  };
-
   const toggleTag = (tag: string) => {
     const formatted = tag.trim().toUpperCase();
     setUserProfileTags((prev) => {
