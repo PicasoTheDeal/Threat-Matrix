@@ -453,7 +453,7 @@ export default {
               return {
                 id: sanitizeInputString(cve.id),
                 title: sanitizeInputString(cve.id),
-                excerpt: sanitizeInputString(desc.slice(0, 200)),
+                excerpt: (desc.slice(0, 200)),
                 category: "NVD Vulnerability",
                 date: cve.published?.split("T")[0] || "Unknown",
                 source: "NVD",

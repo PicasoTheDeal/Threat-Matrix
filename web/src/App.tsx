@@ -1313,22 +1313,6 @@ export default function App() {
                       <div style={{ display: "flex", gap: "12px" }}>
                         <button
                           type="button"
-                          onClick={autofillDefaultPassword}
-                          style={{
-                            background: "none",
-                            border: "none",
-                            color: THEME.accent,
-                            fontSize: "0.75rem",
-                            cursor: "pointer",
-                            textDecoration: "underline",
-                            padding: 0,
-                            fontFamily: THEME.font,
-                          }}
-                        >
-                          Autofill Default
-                        </button>
-                        <button
-                          type="button"
                           onClick={handleCopyCurrentPassword}
                           disabled={!password}
                           style={{
