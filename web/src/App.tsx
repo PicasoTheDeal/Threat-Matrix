@@ -2006,7 +2006,6 @@ export default function App() {
               <option value="CISA">CISA KEV (Critical Exploits)</option>
               <option value="NVD">NVD (Standard CVEs)</option>
               <option value="CIRCL">CIRCL</option>
-              <option value="NewsAPI">Security News</option>
             </select>
           </div>
 
