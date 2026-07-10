@@ -491,8 +491,8 @@ export default {
         return new Response(JSON.stringify(combinedLogs), {
           headers: { "Content-Type": "application/json", ...corsHeaders },
         });
-      } catch (e) {
-        return new Response(JSON.stringify({ error: "Failed to aggregate intelligence." }), {
+      } catch (e: any) {
+        return new Response(JSON.stringify({ error: `Aggregation failure: ${e.message}` }), {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         });

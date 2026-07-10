@@ -293,6 +293,12 @@ export default function App() {
           throw new Error("Operational tracking token authorization certificate rejected.");
         }
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+          throw new Error(errorData.error || `Pipeline failed with status ${res.status}`);
+        }
+
         const freshLogs: ThreatLog[] = await res.json();
 
         if (cancelled) return;
@@ -318,7 +324,8 @@ export default function App() {
       } catch (err: any) {
         if (!cancelled) {
           if (existingLogs.length === 0) setLogs([]);
-          setError("Pipeline sync error.");
+          setError(err.message || "Pipeline sync error.");
+          console.error("DEBUG:", err);
         }
       } finally {
         if (!cancelled) {
