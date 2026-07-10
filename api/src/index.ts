@@ -405,8 +405,9 @@ export default {
       };
 
       try {
-        const newsPromise = fetch(`https://newsapi.org/v2/everything?q=cybersecurity&apiKey=${newsApiKey}`).then((r) => r.json());
-        const cisaPromise = fetch("https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json").then((r) => r.json());
+        const defaultHeaders = { "User-Agent": "ThreatMatrix/1.0 (Cloudflare Worker)" };
+        const newsPromise = safeFetch(`https://newsapi.org/v2/everything?q=cybersecurity&apiKey=${newsApiKey}`, { headers: defaultHeaders });
+        const cisaPromise = safeFetch("https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json", { headers: defaultHeaders });
         const circlPromise = safeFetch("https://cve.circl.lu/api/last");
 
         const today = new Date().toISOString().split("T")[0];
