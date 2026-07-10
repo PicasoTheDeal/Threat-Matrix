@@ -387,13 +387,6 @@ export default {
     }
 
     if (pathname === "/api/logs" && request.method === "GET") {
-      const newsApiKey = env.NEWS_API_KEY;
-      if (!newsApiKey) {
-        return new Response(JSON.stringify({ error: "News API key not configured." }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        });
-      }
       const safeFetch = async (targetUrl: string, init?: RequestInit): Promise<any> => {
         try {
           const res = await fetch(targetUrl, init);
@@ -406,7 +399,6 @@ export default {
 
       try {
         const defaultHeaders = { "User-Agent": "ThreatMatrix/1.0 (Cloudflare Worker)" };
-        const newsPromise = safeFetch(`https://newsapi.org/v2/everything?q=cybersecurity&apiKey=${newsApiKey}`, { headers: defaultHeaders });
         const cisaPromise = safeFetch("https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json", { headers: defaultHeaders });
         const circlPromise = safeFetch("https://cve.circl.lu/api/last");
 
@@ -416,33 +408,21 @@ export default {
           `https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=${twoDaysAgo}T00:00:00.000&pubEndDate=${today}T23:59:59.999&resultsPerPage=10`
         );
 
-        const [newsData, cisaData, circlData, nvdData] = (await Promise.all([
-          newsPromise, cisaPromise, circlPromise, nvdPromise
+        const [cisaData, circlData, nvdData] = (await Promise.all([
+          cisaPromise, circlPromise, nvdPromise
         ])) as any[];
 
-        const newsLogs = (newsData?.articles || []).map((a: any, i: number) => ({
-          id: `NEWS-${i}`,
-          title: sanitizeInputString(a.title),
-          excerpt: sanitizeInputString(a.description || "No summary available."),
-          category: "Security News",
-          date: a.publishedAt?.split("T")[0] || "Unknown",
-          source: sanitizeInputString(a.source?.name || "NewsAPI"),
-          url: a.url,
-          impact: "INFO",
-          readTime: 3,
-        }));
-
-        const cisaLogs = (cisaData?.vulnerabilities || []).slice(0, 15).map((v: any) => ({
-          id: sanitizeInputString(v.cveID),
-          title: sanitizeInputString(v.vulnerabilityName),
-          excerpt: sanitizeInputString(v.shortDescription),
+        const cisaLogs = Array.isArray(cisaData?.vulnerabilities) ? cisaData.vulnerabilities.slice(0, 15).map((v: any) => ({
+          id: sanitizeInputString(v?.cveID || "UNKNOWN"),
+          title: sanitizeInputString(v?.vulnerabilityName || "Unknown Vuln"),
+          excerpt: sanitizeInputString(v?.shortDescription || "No description"),
           category: "Official CISA KEV",
-          date: v.dateAdded,
+          date: v?.dateAdded || "Unknown",
           source: "CISA",
-          url: `https://nvd.nist.gov/vuln/detail/${v.cveID}`,
+          url: v?.cveID ? `https://nvd.nist.gov/vuln/detail/${v.cveID}` : "#",
           impact: "CRITICAL",
           readTime: 5,
-        }));
+        })) : [];
 
         const circlLogs = Array.isArray(circlData)
           ? circlData
@@ -461,25 +441,25 @@ export default {
               }))
           : [];
 
-        const nvdLogs = nvdData?.vulnerabilities
+        const nvdLogs = Array.isArray(nvdData?.vulnerabilities)
           ? nvdData.vulnerabilities.slice(0, 10).map((item: any) => {
-              const cve = item.cve;
+              const cve = item?.cve || {};
               const desc = cve.descriptions?.find((d: any) => d.lang === "en")?.value || "";
               return {
-                id: sanitizeInputString(cve.id),
-                title: sanitizeInputString(cve.id),
-                excerpt: (desc.slice(0, 200)),
+                id: sanitizeInputString(cve.id || "UNKNOWN"),
+                title: sanitizeInputString(cve.id || "UNKNOWN"),
+                excerpt: sanitizeInputString(desc.slice(0, 200)),
                 category: "NVD Vulnerability",
                 date: cve.published?.split("T")[0] || "Unknown",
                 source: "NVD",
-                url: `https://nvd.nist.gov/vuln/detail/${cve.id}`,
+                url: cve.id ? `https://nvd.nist.gov/vuln/detail/${cve.id}` : "#",
                 impact: "HIGH",
                 readTime: 5,
               };
             })
           : [];
 
-        const combinedLogs = [...newsLogs, ...cisaLogs, ...circlLogs, ...nvdLogs].sort((a, b) => {
+        const combinedLogs = [...cisaLogs, ...circlLogs, ...nvdLogs].sort((a, b) => {
           const dateA = Date.parse(a.date);
           const dateB = Date.parse(b.date);
           if (isNaN(dateA) && isNaN(dateB)) return 0;
