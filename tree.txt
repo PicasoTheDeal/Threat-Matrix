@@ -1,0 +1,34 @@
+./
+├── api
+│   ├── .editorconfig
+│   ├── .gitignore
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── .prettierrc
+│   ├── schema.sql
+│   ├── src
+│   │   └── index.ts
+│   ├── tsconfig.json
+│   └── wrangler.toml
+├── README.md
+├── tree.txt
+└── web
+    ├── .gitignore
+    ├── index.html
+    ├── .oxlintrc.json
+    ├── package.json
+    ├── package-lock.json
+    ├── public
+    │   └── favicon.svg
+    ├── README.md
+    ├── src
+    │   ├── App.css
+    │   ├── App.tsx
+    │   ├── index.css
+    │   └── main.tsx
+    ├── tsconfig.app.json
+    ├── tsconfig.json
+    ├── tsconfig.node.json
+    └── vite.config.ts
+
+58 directories, 100 files
