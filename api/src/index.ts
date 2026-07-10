@@ -122,6 +122,8 @@ async function ensureTables(db: D1Database) {
   `).run();
 }
 
+//
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const ALLOWED_ORIGINS = [
