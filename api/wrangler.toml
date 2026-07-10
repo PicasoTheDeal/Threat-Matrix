@@ -1,3 +1,12 @@
 name = "threat-matrix-api"
 main = "src/index.ts"
 compatibility_date = "2026-07-10"
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "threat-matrix-db"
+database_id = "d2a18a14-09aa-4452-910c-5be834523a67"

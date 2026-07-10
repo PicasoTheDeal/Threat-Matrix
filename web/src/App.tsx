@@ -318,7 +318,7 @@ export default function App() {
       } catch (err: any) {
         if (!cancelled) {
           if (existingLogs.length === 0) setLogs([]);
-          setError("Pipeline sync error. Verify that the Cloudflare backend worker is running on port 8787.");
+          setError("Pipeline sync error.");
         }
       } finally {
         if (!cancelled) {
