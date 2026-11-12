@@ -2,9 +2,17 @@
 
 # Threat-Matrix
 
+**Live Deployment:** [Threat-Matrix](https://threat-matrix.pages.dev/)
+
 Threat-Matrix is a serverless threat-intelligence feed. It gathers exploited vulnerabilities, new CVEs,
 advisories, ransomware activity and security news into one searchable page. Signed-in users can follow
 topics, like items and leave comments.
+
+## Project Philosophy & Limitations
+
+This project was built to be completely free, privacy-respecting, and independent. There is zero ad tracking, and it operates without storing sensitive personal data (no emails required). Because the architecture relies on a fully free infrastructure tier to keep the service accessible, it uses a Cloudflare `.pages.dev` domain.
+
+Additionally, while the app aggregates data from major security outlets, some advanced intelligence feeds are restricted by heavy API paywalls. The current sources are selected to provide the best possible free coverage. Future donations to the project will go directly toward upgrading the domain and unlocking premium API feeds to bypass these limitations.
 
 ## What it shows
 
@@ -121,3 +129,7 @@ Database tables are created automatically on first request; `api/schema.sql` doc
 | `GET /api/interactions` | Like and comment counts for all items |
 | `GET /api/comments?id=` | Likes and comments for one item |
 | `POST /api/interact` | Like, unlike, comment, edit or delete a comment |
+
+## Donation
+
+Contact me on: [Telegram](https://t.me/TetstackPM)
