@@ -1,6 +1,10 @@
 name = "threat-matrix-api"
 main = "src/index.ts"
-compatibility_date = "2026-07-10"
+compatibility_date = "2026-11-12"
+
+# refreshes the feed cache in the background so visitors never wait on upstream apis
+[triggers]
+crons = ["*/5 * * * *"]
 
 [observability.logs]
 enabled = true
@@ -10,3 +14,6 @@ invocation_logs = true
 binding = "DB"
 database_name = "threat-matrix-db"
 database_id = "d2a18a14-09aa-4452-910c-5be834523a67"
+
+# secrets are set with wrangler secret put and must never be committed
+# the names and what each one does are listed in src env ts

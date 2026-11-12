@@ -1,32 +1,27 @@
-# React + TypeScript + Vite
+# Threat Matrix: web app
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React 19 + Vite + TypeScript. No UI framework; styles are plain CSS in `src/index.css` (tokens) and `src/App.css` (components).
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+cp .env.example .env.local   # Turnstile site key
+npm install
+npm run dev                  # http://localhost:5173
+npm run build                # type-check and build into dist/
+npm run lint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+The app calls the API on its own origin under `/api`. In development Vite proxies that path to the
+Worker on `http://localhost:8787`; in production `functions/api/[[path]].ts` forwards it through a
+service binding named `API`.
+
+`public/_headers` sets the Content-Security-Policy and other security headers on Cloudflare Pages.
+
+## Layout
+
+| Path | What it holds |
+| --- | --- |
+| `src/App.tsx` | State, data loading, URL sync, page layout |
+| `src/components/` | Header, search and filters, the index (rows), detail sheet, dialogs, toasts |
+| `src/lib/api.ts` | API client, feed cache, session storage |
+| `src/lib/filter.ts` | Search, filters, sorting, topic matching, query-string state |
+| `src/lib/turnstile.ts` | Loads Cloudflare Turnstile only when a form needs it |

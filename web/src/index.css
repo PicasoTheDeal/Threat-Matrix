@@ -1,111 +1,135 @@
+/* design tokens and base styles */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --paper: #f1efe9;
+  --ink: #111110;
+  --dim: #55534d;
+  --faint: #8d8a82;
+  --rule: #d6d3ca;
+  --overlay: rgba(17, 17, 16, 0.28);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --critical: #d63a1a;
+  --high: #b85a00;
+  --medium: #86700a;
+  --low: #4c7059;
+  --like: #d63a1a;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --pad: 28px;
+  --r: 3px;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+:root[data-theme="dark"] {
+  --paper: #0c0c0b;
+  --ink: #e9e7e0;
+  --dim: #a09d95;
+  --faint: #6b6963;
+  --rule: #2a2927;
+  --overlay: rgba(0, 0, 0, 0.6);
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+  --critical: #ff6a45;
+  --high: #eba25a;
+  --medium: #d6bf5c;
+  --low: #8fb89e;
+  --like: #ff6a45;
+
+  color-scheme: dark;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  border-radius: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+}
+
+html.no-scroll {
+  overflow: hidden;
 }
 
 body {
   margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 15px/1.45 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+h1, h2, h3, p, ul, ol, dl, dd, fieldset, legend {
   margin: 0;
+  padding: 0;
+  font-weight: inherit;
+  font-size: inherit;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+fieldset {
+  border: 0;
+  min-width: 0;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+ul, ol {
+  list-style: none;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.icon {
+  flex: none;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

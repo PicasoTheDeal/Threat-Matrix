@@ -1,18 +1,20 @@
 {
-  "name": "api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "threat-matrix-api",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Threat-Matrix API (Cloudflare Worker + D1)",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc -p .",
+    "test": "node --no-warnings test/run.mjs",
+    "db:migrate": "wrangler d1 execute threat-matrix-db --remote --file=./schema.sql"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260702.1",
-    "typescript": "^6.0.3",
-    "wrangler": "^4.107.0"
+    "@cloudflare/workers-types": "^5.20261112.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.161.0"
   }
 }

@@ -1,34 +1,76 @@
 ./
 ├── api
-│   ├── .editorconfig
-│   ├── .gitignore
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── .prettierrc
-│   ├── schema.sql
-│   ├── src
-│   │   └── index.ts
-│   ├── tsconfig.json
-│   └── wrangler.toml
+│   ├── package.json
+│   ├── schema.sql
+│   ├── src
+│   │   ├── auth.ts            accounts, sessions, followed topics
+│   │   ├── crypto.ts          PBKDF2, hashing, tokens
+│   │   ├── db.ts              schema bootstrap and cleanup
+│   │   ├── env.ts
+│   │   ├── feeds
+│   │   │   ├── cache.ts       refresh scheduling, merge, cached serving
+│   │   │   ├── rss.ts         RSS / Atom reader
+│   │   │   ├── sources.ts     one fetcher per upstream source
+│   │   │   ├── text.ts        text and URL normalisation
+│   │   │   └── types.ts
+│   │   ├── http.ts            CORS, headers, body parsing
+│   │   ├── index.ts           router, cron handler
+│   │   ├── interactions.ts    likes and comments
+│   │   └── ratelimit.ts
+│   ├── test
+│   │   ├── d1-shim.mjs
+│   │   ├── fixtures.mjs
+│   │   └── run.mjs
+│   ├── tsconfig.json
+│   └── wrangler.toml
 ├── README.md
 ├── tree.txt
 └── web
-    ├── .gitignore
+    ├── .env.example
+    ├── functions
+    │   └── api
+    │       └── [[path]].ts   forwards /api to the worker
     ├── index.html
-    ├── .oxlintrc.json
     ├── package.json
-    ├── package-lock.json
     ├── public
-    │   └── favicon.svg
-    ├── README.md
+    │   ├── _headers           security headers for Cloudflare Pages
+    │   ├── apple-touch-icon.png
+    │   ├── favicon.svg
+    │   ├── icon-192.png
+    │   ├── icon-512.png
+    │   ├── logo.svg
+    │   ├── og.png
+    │   ├── site.webmanifest
+    │   └── theme.js
     ├── src
-    │   ├── App.css
-    │   ├── App.tsx
-    │   ├── index.css
-    │   └── main.tsx
+    │   ├── App.css
+    │   ├── App.tsx
+    │   ├── components
+    │   │   ├── AuthDialog.tsx
+    │   │   ├── Detail.tsx
+    │   │   ├── Dialog.tsx
+    │   │   ├── FilterBar.tsx
+    │   │   ├── Header.tsx
+    │   │   ├── Icon.tsx
+    │   │   ├── List.tsx
+    │   │   ├── Logo.tsx
+    │   │   ├── Row.tsx
+    │   │   ├── Toasts.tsx
+    │   │   ├── TopicsDialog.tsx
+    │   │   └── Turnstile.tsx
+    │   ├── index.css
+    │   ├── lib
+    │   │   ├── api.ts
+    │   │   ├── filter.ts
+    │   │   ├── format.ts
+    │   │   ├── password.ts
+    │   │   ├── storage.ts
+    │   │   ├── topics.ts
+    │   │   ├── turnstile.ts
+    │   │   └── types.ts
+    │   ├── main.tsx
+    │   └── vite-env.d.ts
     ├── tsconfig.app.json
     ├── tsconfig.json
     ├── tsconfig.node.json
     └── vite.config.ts
-
-58 directories, 100 files
