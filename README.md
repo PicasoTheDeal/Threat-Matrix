@@ -2,7 +2,7 @@
 
 # Threat-Matrix
 
-**Live Deployment:** [Threat-Matrix](https://threat-matrix.pages.dev/)
+**Deployment:** [Threat-Matrix](https://threat-matrix.pages.dev/)
 
 Threat-Matrix is a serverless threat-intelligence feed. It gathers exploited vulnerabilities, new CVEs,
 advisories, ransomware activity and security news into one searchable page. Signed-in users can follow

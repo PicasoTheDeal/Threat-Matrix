@@ -88,7 +88,7 @@ export function countActive(filters: Filters): number {
   return (filters.severity.length > 0 ? 1 : 0) + (filters.source ? 1 : 0) + (filters.range ? 1 : 0);
 }
 
-// url state filters live in the query string so views can be bookmarked and shared
+// url state filters are kept in the query string so views can be bookmarked and shared
 
 export function filtersFromUrl(search: string): Filters {
   const params = new URLSearchParams(search);
